@@ -6,6 +6,7 @@ const cameraOverlay = document.getElementById("cameraOverlay");
 const countdownNumber = document.getElementById("countdownNumber");
 const photoCountSelect = document.getElementById("photoCount");
 const startButton = document.getElementById("startButton");
+const switchCameraButton = document.getElementById("switchCameraButton");
 const thumbnailsContainer = document.getElementById("thumbnails");
 const statusMessage = document.getElementById("statusMessage");
 const stripPreview = document.getElementById("stripPreview");
@@ -24,20 +25,73 @@ let isCapturing = false;
 let activeDragSticker = null;
 let dragOffsetX = 0;
 let dragOffsetY = 0;
+let currentStream = null;
+let cameraOn = false;
 
 // Initialize camera on load
 async function initCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
+    await startCameraWithConstraints({
       video: { facingMode: "user" },
       audio: false,
     });
-    video.srcObject = stream;
+    cameraOn = true;
+    switchCameraButton.disabled = false;
+    switchCameraButton.textContent = "Turn Camera Off";
     statusMessage.textContent = "Camera ready. Choose shots and press Start.";
   } catch (err) {
     console.error("Error accessing camera", err);
+    cameraOn = false;
+    switchCameraButton.disabled = true;
     statusMessage.textContent =
       "Unable to access camera. Please allow camera permissions in your browser.";
+  }
+}
+
+// Helper to start camera with given constraints and manage current stream
+async function startCameraWithConstraints(constraints) {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    throw new Error("Camera API not supported in this browser.");
+  }
+
+  // Stop any existing stream
+  if (currentStream) {
+    currentStream.getTracks().forEach((track) => track.stop());
+    currentStream = null;
+  }
+
+  const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  currentStream = stream;
+  video.srcObject = stream;
+}
+
+// Toggle camera on/off
+async function toggleCamera() {
+  try {
+    if (cameraOn) {
+      // Turn off
+      if (currentStream) {
+        currentStream.getTracks().forEach((track) => track.stop());
+        currentStream = null;
+      }
+      video.srcObject = null;
+      cameraOn = false;
+      switchCameraButton.textContent = "Turn Camera On";
+      statusMessage.textContent = "Camera paused.";
+    } else {
+      // Turn on
+      await startCameraWithConstraints({
+        video: { facingMode: "user" },
+        audio: false,
+      });
+      cameraOn = true;
+      switchCameraButton.textContent = "Turn Camera Off";
+      statusMessage.textContent = "Camera ready. Choose shots and press Start.";
+    }
+  } catch (err) {
+    console.error("Failed to toggle camera", err);
+    statusMessage.textContent =
+      "Unable to toggle camera. Check browser permissions.";
   }
 }
 
@@ -217,6 +271,7 @@ async function downloadStrip() {
 // Event wiring
 function attachEventListeners() {
   startButton.addEventListener("click", startCaptureSequence);
+  switchCameraButton.addEventListener("click", toggleCamera);
   stripTextInput.addEventListener("input", onCaptionInput);
   clearStickersButton.addEventListener("click", clearStickers);
   downloadButton.addEventListener("click", downloadStrip);

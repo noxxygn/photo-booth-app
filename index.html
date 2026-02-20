@@ -37,9 +37,14 @@
               </select>
             </div>
 
-            <button id="startButton" class="primary-button">
-              Start Photo Session
-            </button>
+            <div class="control-group inline-controls">
+              <button id="startButton" class="primary-button">
+                Start Photo Session
+              </button>
+              <button id="switchCameraButton" class="secondary-button">
+                Turn Camera Off
+              </button>
+            </div>
 
             <div id="statusMessage" class="status-message"></div>
 
@@ -143,6 +148,7 @@
 
     <!-- html2canvas for DOM to PNG export -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Main app logic -->
+    <script src="style.js"></script>
   </body>
 </html>
