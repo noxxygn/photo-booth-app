@@ -1,1 +1,148 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Booth Strip Maker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Main App Container -->
+    <div class="app">
+      <!-- Header -->
+      <header class="app-header">
+        <h1>Photo Booth Strip Maker</h1>
+        <p>Create your own Instax-style photo strips.</p>
+      </header>
+
+      <main class="app-main">
+        <!-- LEFT: Camera and Controls -->
+        <section class="panel panel-camera">
+          <!-- Live Camera Preview -->
+          <div class="camera-wrapper">
+            <video id="camera" autoplay playsinline></video>
+            <div id="cameraOverlay" class="camera-overlay hidden">
+              <span id="countdownNumber"></span>
+            </div>
+          </div>
+
+          <!-- Capture Controls -->
+          <div class="controls">
+            <div class="control-group">
+              <label for="photoCount">Number of photos</label>
+              <select id="photoCount">
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+
+            <button id="startButton" class="primary-button">
+              Start Photo Session
+            </button>
+
+            <div id="statusMessage" class="status-message"></div>
+
+            <div class="thumbs">
+              <h3>Captured photos</h3>
+              <div id="thumbnails" class="thumbs-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: Strip editor and preview -->
+        <section class="panel panel-editor">
+          <!-- Theme selection -->
+          <div class="control-group">
+            <h3>Strip theme</h3>
+            <div class="theme-options">
+              <label>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="classic"
+                  checked
+                />
+                <span class="theme-swatch theme-classic">Classic</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="pastel"
+                />
+                <span class="theme-swatch theme-pastel">Pastel</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="theme"
+                  value="neon"
+                />
+                <span class="theme-swatch theme-neon">Neon</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Text overlay editor -->
+          <div class="control-group">
+            <h3>Caption</h3>
+            <input
+              id="stripText"
+              type="text"
+              maxlength="40"
+              placeholder="Type caption for your strip (max 40 chars)"
+            />
+          </div>
+
+          <!-- Sticker palette -->
+          <div class="control-group">
+            <h3>Stickers</h3>
+            <div id="stickerPalette" class="sticker-palette">
+              <!-- Basic emoji-style stickers -->
+              <button class="sticker-btn" data-sticker="✨">✨</button>
+              <button class="sticker-btn" data-sticker="💜">💜</button>
+              <button class="sticker-btn" data-sticker="🌸">🌸</button>
+              <button class="sticker-btn" data-sticker="📸">📸</button>
+              <button class="sticker-btn" data-sticker="😄">😄</button>
+            </div>
+            <p class="hint">Click a sticker, then drag it on the strip.</p>
+          </div>
+
+          <!-- Strip preview area -->
+          <div class="strip-preview-wrapper">
+            <h3>Strip preview</h3>
+            <div id="stripPreview" class="strip-preview theme-classic">
+              <div class="strip-inner">
+                <div class="strip-photos">
+                  <div class="strip-slot" data-index="0"></div>
+                  <div class="strip-slot" data-index="1"></div>
+                  <div class="strip-slot" data-index="2"></div>
+                  <div class="strip-slot" data-index="3"></div>
+                </div>
+                <div class="strip-caption" id="stripCaption">Your caption</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions">
+            <button id="clearStickersButton" class="secondary-button">
+              Clear Stickers
+            </button>
+            <button id="downloadButton" class="primary-button">
+              Download PNG
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Hidden canvas used for capturing frames & export -->
+      <canvas id="captureCanvas" class="hidden"></canvas>
+    </div>
+
+    <!-- html2canvas for DOM to PNG export -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

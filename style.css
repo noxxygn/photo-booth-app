@@ -1,0 +1,427 @@
+/* 
+  Global layout and typography 
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  color: #f9fafb;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.app-header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: #cbd5f5;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+  gap: 1.25rem;
+}
+
+.panel {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel h3 {
+  margin: 0 0 0.25rem;
+}
+
+/* 
+  Camera area 
+*/
+
+.panel-camera {
+  gap: 1rem;
+}
+
+.camera-wrapper {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #020617;
+  border: 2px solid rgba(148, 163, 184, 0.5);
+  aspect-ratio: 4 / 3;
+}
+
+video#camera {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #020617;
+}
+
+.camera-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f9fafb;
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  transition: opacity 0.2s ease;
+}
+
+.camera-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+select,
+input[type="text"] {
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+  color: #f9fafb;
+  outline: none;
+}
+
+select:focus,
+input[type="text"]:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+}
+
+.primary-button,
+.secondary-button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #022c22;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.5);
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.7);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.6);
+}
+
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.secondary-button {
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  color: #e5e7eb;
+}
+
+.secondary-button:hover {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.status-message {
+  min-height: 1.2rem;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.thumbs {
+  margin-top: 0.5rem;
+}
+
+.thumbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 0.4rem;
+}
+
+.thumbs-grid img {
+  width: 100%;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  object-fit: cover;
+  display: block;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* 
+  Editor & strip 
+*/
+
+.theme-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.theme-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+.theme-options input[type="radio"] {
+  accent-color: #38bdf8;
+}
+
+.theme-swatch {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+}
+
+.theme-classic {
+  background: #f9fafb;
+  color: #111827;
+}
+
+.theme-pastel {
+  background: linear-gradient(135deg, #fee2e2, #fef3c7);
+  color: #7f1d1d;
+}
+
+.theme-neon {
+  background: radial-gradient(circle at top left, #22c55e, #06b6d4);
+  color: #e0f2fe;
+}
+
+.strip-preview-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.strip-preview {
+  margin-top: 0.25rem;
+  align-self: center;
+  width: min(210px, 60vw);
+  aspect-ratio: 2 / 5;
+  border-radius: 1rem;
+  padding: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.strip-preview.theme-classic {
+  background: #e5e7eb;
+}
+
+.strip-preview.theme-pastel {
+  background: linear-gradient(180deg, #fee2e2, #fef3c7);
+}
+
+.strip-preview.theme-neon {
+  background: radial-gradient(circle at top, #0ea5e9, #1e293b);
+}
+
+.strip-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.strip-preview.theme-neon .strip-inner {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.strip-photos {
+  flex: 1;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0.25rem;
+}
+
+.strip-slot {
+  border-radius: 0.4rem;
+  overflow: hidden;
+  border: 2px solid rgba(15, 23, 42, 0.1);
+  background: #111827;
+  position: relative;
+}
+
+.strip-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.strip-caption {
+  margin-top: 0.2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.15rem;
+}
+
+.strip-preview.theme-pastel .strip-caption {
+  color: #7f1d1d;
+}
+
+.strip-preview.theme-neon .strip-caption {
+  color: #f9fafb;
+}
+
+/* 
+  Stickers (draggable) 
+*/
+
+.sticker-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sticker-btn {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  background: rgba(15, 23, 42, 0.9);
+  color: #f9fafb;
+  padding: 0.25rem 0.6rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.12s ease, transform 0.08s ease;
+}
+
+.sticker-btn:hover {
+  background: rgba(30, 64, 175, 0.9);
+  transform: translateY(-1px);
+}
+
+.sticker-instance {
+  position: absolute;
+  font-size: 1.5rem;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.sticker-instance.dragging {
+  cursor: grabbing;
+}
+
+.actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* 
+  Responsive tweaks 
+*/
+
+@media (max-width: 960px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-camera {
+    order: 1;
+  }
+
+  .panel-editor {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .app-main {
+    padding: 0.75rem;
+  }
+
+  .panel {
+    padding: 0.75rem;
+  }
+}
